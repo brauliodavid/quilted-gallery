@@ -29,7 +29,9 @@ export type PackOptions = {
   forceHeroOnFirstRow: boolean;
 };
 
-export type Options = {
+export type Options = Partial<BaseOptions>;
+
+export type BaseOptions = {
   cols: number | ((containerWidth: number) => number);
   rowHeight: number;
   gap: number;
