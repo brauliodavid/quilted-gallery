@@ -3,12 +3,14 @@ name: "Publish New Release"
 
 on:
   pull_request:
-    branches: [ main ]
-    types: [ closed ]
+    branches:
+      - main
+    types:
+      - closed
 
-permissions:
-  contents: write     # create releases, push tags
-  id-token: write     # npm provenance support
+# permissions:
+#   contents: write     # create releases, push tags
+#   id-token: write     # npm provenance support
 
 jobs:
   release:
