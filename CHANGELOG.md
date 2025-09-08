@@ -41,5 +41,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Styles**: `dist/style.css` shipped; optional `injectDefaultCSS` fallback.
 - **CDN usage** (example):
   ```html
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quilted-gallery@0.1.0/dist/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/quilted-gallery@0.1.0/dist/index.global.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quilted-gallery@0.0.0/dist/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/quilted-gallery@0.0.0/dist/index.global.js" defer></script>
