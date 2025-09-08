@@ -1,0 +1,35 @@
+{
+  "name": "quilted-gallery",
+  "version": "0.0.5",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.mjs",
+  "unpkg": "dist/index.global.js",
+  "jsdelivr": "dist/index.global.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "browser": "./dist/index.mjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs,iife --global-name QuiltedGallery --dts --sourcemap --minify && cp src/lib/style.css dist/style.css",
+    "dev": "tsup src/index.ts --format esm,cjs,iife --global-name QuiltedGallery --dts --sourcemap --watch",
+    "preview": "vite demo",
+    "start": "vite demo"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.6.0",
+    "vite": "^5.0.0",
+    "@types/node": "^22.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ]
+}
