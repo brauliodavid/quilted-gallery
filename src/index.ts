@@ -1,11 +1,11 @@
 class QuiltedGallery {
   private el: HTMLElement;
-  private opts: Options;
+  private opts: BaseOptions;
   private items: QuiltedItem[];
   private ro?: ResizeObserver;
   private mounted = false;
 
-  constructor(el: HTMLElement, opts: Partial<Options> = {}) {
+  constructor(el: HTMLElement, opts: Partial<BaseOptions> = {}) {
     if (!el) throw new Error('container element required');
 
     this.opts = {
@@ -142,7 +142,7 @@ class QuiltedGallery {
 // --- helpers (duplicate lightweight versions so your d.ts stays stable) ---
 function clamp(v: number, lo: number, hi: number) { return Math.max(lo, Math.min(hi, v)); }
 
-import type { Options, PackOptions, QuiltedItem } from './lib/types';
+import type { BaseOptions, Options, PackOptions, QuiltedItem } from './lib/types';
 // NOTE: implement or import your TypeScript version of packGreedy here:
 import { packGreedy } from './lib/quilt'; // you’ll write this in TS
 import { injectCSS } from './lib/css'; // you’ll write this in TS
