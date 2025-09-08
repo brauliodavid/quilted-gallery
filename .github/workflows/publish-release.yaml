@@ -136,12 +136,17 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Merge main into develop directly
-        if: ${{ success() }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git fetch origin
-          git checkout develop
-          git merge --no-ff origin/main -m "chore: back-merge main into develop [ci]"
-          git push origin develop
+      - name: Merge main into develop branch
+        uses: thomaseizinger/create-pull-request@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          head: main
+          base: develop
+          title: Merge main into develop branch
+          body: |
+            This PR merges the main branch back into develop.
+            This happens to ensure that the updates that happend on the release branch, i.e. CHANGELOG and manifest updates are also present on the develop branch.
+      # if needed, you can checkout the latest main here, build artifacts and publish / deploy them somewhere
+      # the create-release action has an output `upload_url` output that you can use to upload assets
+
