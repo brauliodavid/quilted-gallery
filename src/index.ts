@@ -150,4 +150,4 @@ import { injectCSS } from './lib/css'; // you’ll write this in TS
 export type { Options, PackOptions, QuiltedItem } from './lib/types';
 
 export default QuiltedGallery;   // default export
-export { QuiltedGallery };       // named export (adds { QuiltedGallery })
+// export { QuiltedGallery };       // named export (adds { QuiltedGallery })
