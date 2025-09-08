@@ -11,6 +11,7 @@ on:
 permissions:
   contents: write     # create releases, push tags
   id-token: write     # npm provenance support
+  pull-requests: write
 
 jobs:
   release:
