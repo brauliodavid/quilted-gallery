@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.3] - 2025-09-08
+
 ## [0.0.2] - 2025-09-08
 
 ## [0.0.1] - 2025-09-08
@@ -59,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   <script src="https://cdn.jsdelivr.net/npm/quilted-gallery@0.0.0/dist/index.global.js" defer></script>
   ```
 
-[unreleased]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.2...HEAD
+[unreleased]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.3...HEAD
+[0.0.3]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.2...0.0.3
 [0.0.2]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.1...0.0.2
 [0.0.1]: https://github.com/brauliodavid/quilted-gallery/compare/e5362b2023d55d57721c4d7839668609c1928b9d...0.0.1

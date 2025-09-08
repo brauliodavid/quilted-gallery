@@ -134,3 +134,17 @@ jobs:
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Merge main into develop branch
+        uses: thomaseizinger/create-pull-request@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          head: main
+          base: develop
+          title: Merge main into develop branch
+          body: |
+            This PR merges the main branch back into develop.
+            This happens to ensure that the updates that happend on the release branch, i.e. CHANGELOG and manifest updates are also present on the develop branch.
+      # if needed, you can checkout the latest main here, build artifacts and publish / deploy them somewhere
+      # the create-release action has an output `upload_url` output that you can use to upload assets

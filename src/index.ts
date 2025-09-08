@@ -1,4 +1,4 @@
-export default class QuiltedGallery {
+class QuiltedGallery {
   private el: HTMLElement;
   private opts: Options;
   private items: QuiltedItem[];
@@ -148,3 +148,6 @@ import { packGreedy } from './lib/quilt'; // you’ll write this in TS
 import { injectCSS } from './lib/css'; // you’ll write this in TS
 
 export type { Options, PackOptions, QuiltedItem } from './lib/types';
+
+export default QuiltedGallery;   // default export
+export { QuiltedGallery };       // named export (adds { QuiltedGallery })
