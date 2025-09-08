@@ -8,9 +8,9 @@ on:
     types:
       - closed
 
-# permissions:
-#   contents: write     # create releases, push tags
-#   id-token: write     # npm provenance support
+permissions:
+  contents: write     # create releases, push tags
+  id-token: write     # npm provenance support
 
 jobs:
   release:
