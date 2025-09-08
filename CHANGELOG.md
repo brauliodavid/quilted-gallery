@@ -7,14 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.5] - 2025-09-08
-
-## [0.0.4] - 2025-09-08
-
-## [0.0.3] - 2025-09-08
-
-## [0.0.2] - 2025-09-08
-
 ## [0.0.1] - 2025-09-08
 
 ### Added
@@ -61,13 +53,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Styles**: `dist/style.css` shipped; optional `injectDefaultCSS` fallback.
 - **CDN usage** (example):
   ```html
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quilted-gallery@0.1.0/dist/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/quilted-gallery@0.1.0/dist/index.global.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/quilted-gallery@0.0.0/dist/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/quilted-gallery@0.0.0/dist/index.global.js" defer></script>
   ```
 
-[unreleased]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.5...HEAD
-[0.0.5]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.4...0.0.5
-[0.0.4]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.3...0.0.4
-[0.0.3]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.2...0.0.3
-[0.0.2]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.1...0.0.2
-[0.0.1]: https://github.com/brauliodavid/quilted-gallery/compare/5040d26358f80d078a82faebc4cc8528b1788b69...0.0.1
+[unreleased]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.1...HEAD
+[0.0.1]: https://github.com/brauliodavid/quilted-gallery/compare/e5362b2023d55d57721c4d7839668609c1928b9d...0.0.1
