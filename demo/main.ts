@@ -63,8 +63,7 @@ const items: QuiltedItem[] = [
 ];
 
 const el = document.getElementById('app')!;
-const g = new QuiltedGallery(el, {
-  items,
+const g = new QuiltedGallery(el, items, {
   cols: (w) => (w < 576 ? 2 : w < 768 ? 3 : w < 992 ? 4 : 5),
   rowHeight: 140,
   gap: 4,

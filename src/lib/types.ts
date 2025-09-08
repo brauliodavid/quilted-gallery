@@ -46,7 +46,6 @@ export type BaseOptions = {
   heroRowsMax: number;
   minTotalHeroes: number;
   forceHeroOnFirstRow: boolean;
-  items: QuiltedItem[];
   injectDefaultCSS: boolean;
   autoResize: boolean;
   src: (it: QuiltedItem, cellH: number, rows: number, cols: number) => string;
