@@ -31,5 +31,11 @@
     "dist",
     "README.md",
     "LICENSE"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brauliodavid/quilted-gallery"
+  },
+  "description": "Quilted gallery for images",
+  "author": "Braulio David"
 }
