@@ -2,7 +2,7 @@
 <html>
   <head>
     <script type="module">
-      import { register } from '../src/element/element';
+      import { register } from '../../src/element/element';
       register(); // defines <quilted-gallery>
 
       // Optional: imperative usage
@@ -66,7 +66,7 @@
         },
       ];
 
-      el.updateOptions({
+      el.patchOptions({
         onItemClick: ({ item, index, event }) => {
           console.log('onItemClick callback', index, item, event.type);
         },
@@ -74,7 +74,6 @@
           console.log('onItemRemove callback', index, image);
         }
       });
-
     </script>
   </head>
   <body>

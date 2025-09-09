@@ -1,165 +1,119 @@
-// src/element.ts
-import { QuiltedGallery } from '../index';
-import type { Options as GalleryOptions, QuiltedImage } from '../index';
+import { QuiltedGallery as QG } from '../index';
+import type { QuiltedImage, Options, BaseOptions } from '../index';
 
-export type ElementOptions = GalleryOptions;
-
-const DEFAULTS: Partial<ElementOptions> = {
-  cols: 4,
-  rowHeight: 121,
-  gap: 4,
-  injectDefaultCSS: true,
-  autoResize: true,
-};
-
-const OBSERVED_ATTRS = [
-  'cols',
-  'row-height',
-  'gap',
-  'inject-default-css',
-  'auto-resize',
-  'items-json',
-] as const;
-
-function numAttr(el: Element, name: string): number | undefined {
-  const v = el.getAttribute(name);
-  return v == null ? undefined : Number(v);
-}
-function boolAttr(el: Element, name: string): boolean | undefined {
-  if (!el.hasAttribute(name)) return undefined;
-  const v = el.getAttribute(name);
-  return v === null || v === '' || v.toLowerCase() === 'true';
-}
+export type ElementOptions = Partial<Options>;
 
 export class QuiltedGalleryElement extends HTMLElement {
   static tagName = 'quilted-gallery';
-  static get observedAttributes() { return OBSERVED_ATTRS as unknown as string[]; }
 
-  #gallery?: QuiltedGallery;
+  // Core instance + local state
+  #gallery: QG | null = null;
   #items: QuiltedImage[] = [];
+  #options: ElementOptions = { cols: 4, rowHeight: 121, gap: 4, injectDefaultCSS: true, autoResize: true };
 
   constructor() {
     super();
-    // Let it participate in layout by default
     if (!this.style.display) this.style.display = 'block';
   }
 
-  async connectedCallback() {
-    // Prefer items-json, else parse light-DOM <img> and wait for them to load
-    if (!this.#items.length && this.getAttribute('items-json')) {
-      try { this.#items = JSON.parse(this.getAttribute('items-json')!); } catch {}
-    } else if (!this.#items.length) {
-      this.#items = await this.#parseLightDomAsync();
+  connectedCallback() {
+    // Handle pre-upgrade property sets: el.items = [...] before customElements.define()
+    this.#upgradeProperty('items');
+    this.#upgradeProperty('options');
+
+    // If no items set programmatically, try items-json or <img> fallback
+    if (!this.#items.length) {
+      const raw = this.getAttribute('items-json');
+      if (raw) {
+        try { this.#items = JSON.parse(raw); } catch {}
+      }
     }
 
-    // If width is 0 (hidden tab/accordion), wait one frame
-    if (this.offsetWidth === 0) await new Promise(requestAnimationFrame);
-
-    this.#ensure();
+    // If width is 0 (hidden tab/accordion), wait a frame
+    if (this.offsetWidth === 0) {
+      requestAnimationFrame(() => this.#ensure());
+    } else {
+      this.#ensure();
+    }
   }
 
   disconnectedCallback() {
     this.#gallery?.destroy?.();
-    this.#gallery = undefined;
+    this.#gallery = null;
   }
 
-  attributeChangedCallback(name: string) {
-    if (name === 'items-json') {
-      const raw = this.getAttribute('items-json') ?? '[]';
-      try { this.items = JSON.parse(raw); } catch {}
-      return;
-    }
-    if (this.#gallery) this.#applyOptions();
+  // ---------- Public properties (React-style) ----------
+  get items(): QuiltedImage[] {
+    return this.#items;
   }
-
-  // -------- Public API (no DOM name collisions) --------
-  get items() { return this.#items; }
   set items(v: QuiltedImage[]) {
     this.#items = Array.isArray(v) ? v : [];
-    if (this.#gallery) this.#gallery.setItems(this.#items);
+    this.#gallery ? this.#gallery.setItems(this.#items) : void 0;
   }
 
-  replaceItems(items: QuiltedImage[]) { this.items = items; }
-
-  addItem(item: QuiltedImage) {
-    this.#items = [...this.#items, item];
-    this.#gallery?.addItem(item);
+  get options(): ElementOptions {
+    return this.#options;
+  }
+  set options(patch: ElementOptions) {
+    this.#options = { ...this.#options, ...(patch || {}) };
+    this.#gallery ? this.#gallery.patchOptions(this.#options) : void 0;
   }
 
-  updateItemAt(index: number, patch: Partial<QuiltedImage>) {
-    if (index < 0 || index >= this.#items.length) return;
-    this.#items = this.#items.map((it, i) => i === index ? { ...it, ...patch } : it);
-    this.#gallery?.updateItemAt(index, this.#items[index]);
-  }
-
+  // ---------- Convenience API (no DOM name collisions) ----------
+  setItems(items: QuiltedImage[]) { this.items = items; }
+  addItem(item: QuiltedImage) { this.#items = [...this.#items, item]; this.#gallery?.addItem(item); }
+  updateItemAt(index: number, patch: Partial<QuiltedImage>) { this.#gallery?.updateItemAt(index, patch); }
   removeItemAt(index: number) {
     if (index < 0 || index >= this.#items.length) return;
-    const copy = this.#items.slice(); copy.splice(index, 1); this.#items = copy;
+    this.#items = this.#items.slice(0, index).concat(this.#items.slice(index + 1));
     this.#gallery?.removeItemAt(index);
   }
 
   relayout() { this.#gallery?.render(); }
-
   refresh() {
     this.#gallery?.destroy?.();
-    this.#gallery = new QuiltedGallery(this, this.#items, this.#readOptions());
+    this.#gallery = null;
+    this.#ensure();
   }
 
-  updateOptions(patch: Partial<ElementOptions>) {
-    const next = { ...this.#readOptions(), ...patch };
-    if (this.#gallery) this.#gallery.updateOptions(next);
+  patchOptions(patch: Partial<BaseOptions>){
+    this.options = patch
   }
 
-  // -------- Internals --------
+  // ---------- Internals ----------
   #ensure() {
     if (this.#gallery) return;
-    this.#gallery = new QuiltedGallery(this, this.#items, this.#readOptions());
+    this.#gallery = new QG(this, this.#items, this.#options);
+    // Optional: bridge camelCase events to dash-case for framework ergonomics
+    this.addEventListener('itemClick' as any, (ev: Event) => {
+      this.dispatchEvent(new CustomEvent('item-click', { detail: (ev as CustomEvent).detail, bubbles: true, composed: true }));
+    });
+    this.addEventListener('itemRemoved' as any, (ev: Event) => {
+      this.dispatchEvent(new CustomEvent('item-removed', { detail: (ev as CustomEvent).detail, bubbles: true, composed: true }));
+    });
   }
 
-  #readOptions(): ElementOptions {
-    return {
-      ...DEFAULTS,
-      cols: numAttr(this, 'cols') ?? DEFAULTS.cols,
-      rowHeight: numAttr(this, 'row-height') ?? DEFAULTS.rowHeight,
-      gap: numAttr(this, 'gap') ?? DEFAULTS.gap,
-      injectDefaultCSS: boolAttr(this, 'inject-default-css') ?? DEFAULTS.injectDefaultCSS,
-      autoResize: boolAttr(this, 'auto-resize') ?? DEFAULTS.autoResize,
-    };
-  }
-
-  #applyOptions() {
-    if (this.#gallery && 'updateOptions' in this.#gallery) {
-      this.#gallery.updateOptions(this.#readOptions());
-    } else {
-      this.refresh();
+  #upgradeProperty(name: 'items' | 'options') {
+    // If a property was set before upgrade, re-apply it so our setter runs
+    // (classic web components pattern)
+    // @ts-ignore
+    if (Object.prototype.hasOwnProperty.call(this, name)) {
+      // @ts-ignore
+      const value = this[name];
+      // @ts-ignore
+      delete this[name];
+      // @ts-ignore
+      this[name] = value;
     }
-  }
-
-  async #parseLightDomAsync(): Promise<QuiltedImage[]> {
-    const imgs = Array.from(this.querySelectorAll('img')) as HTMLImageElement[];
-    if (!imgs.length) return [];
-    await Promise.all(
-      imgs.filter(img => !img.complete).map(img =>
-        new Promise<void>(res => img.addEventListener('load', () => res(), { once: true }))
-      )
-    );
-    return imgs.map(img => ({
-      src: img.getAttribute('src') ?? '',
-      title: img.getAttribute('title') ?? undefined,
-      alt: img.getAttribute('alt') ?? undefined,
-      width: img.naturalWidth || undefined,
-      height: img.naturalHeight || undefined,
-    }));
   }
 }
 
+// Tree-shakable registration
 export function register(tagName = QuiltedGalleryElement.tagName) {
   if (!customElements.get(tagName)) customElements.define(tagName, QuiltedGalleryElement);
 }
 
+// TS: tag typing
 declare global {
-  interface HTMLElementTagNameMap {
-    'quilted-gallery': QuiltedGalleryElement;
-  }
+  interface HTMLElementTagNameMap { 'quilted-gallery': QuiltedGalleryElement; }
 }
-

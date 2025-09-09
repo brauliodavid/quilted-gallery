@@ -35,7 +35,7 @@ export class QuiltedGallery {
   }
 
   setItems(images: QuiltedImage[]) { this.images = images || []; this.render(); return this; }
-  updateOptions(patch: Partial<Options>) { Object.assign(this.opts, patch); this.render(); return this; }
+  patchOptions(patch: Partial<Options>) { Object.assign(this.opts, patch); this.render(); return this; }
 
   destroy() {
     this.ro?.disconnect();

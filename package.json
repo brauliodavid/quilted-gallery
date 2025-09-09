@@ -32,7 +32,7 @@
     "dev": "tsup src/index.ts --format esm,cjs,iife --global-name QuiltedGallery --dts --sourcemap --watch",
     "preview": "vite demo/core",
     "start": "vite demo/core",
-    "start:element": "vite demo/react",
+    "start:element": "vite demo/element",
     "start:react": "vite demo/react"
   },
   "devDependencies": {

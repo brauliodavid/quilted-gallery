@@ -1,38 +1,39 @@
-import React, { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { QuiltedGallery, type QuiltedGalleryRef } from 'quilted-gallery/react';
+import { QuiltedGallery as QG, QuiltedImage } from 'quilted-gallery';
+import items from '../../dummy.json'
+
+const images: QuiltedImage[] = items
 
 export default function App() {
   const ref = useRef<QuiltedGalleryRef>(null);
-  const [items, setItems] = useState([
-    { src: '/img/a.jpg', width: 1200, height: 800, title: 'A' },
-    { src: '/img/b.jpg', width: 900,  height: 1200, title: 'B' }
-  ]);
+  const [gallery, setGallery] = useState<QG>(null);
+
+  const add = () => gallery?.addItem(images[2]);
+  const relayout = () => {
+    gallery?.destroy()
+    gallery?.render()
+  };
+
+  useEffect(() => {
+    if(ref?.current){
+      setGallery(ref.current.gallery as any)
+    }
+  }, [ref])
 
   return (
-    <div style={{ padding: 16 }}>
+    <div style={{'width': '428px'}}>
+      <button onClick={add}>Add</button>
+      <button onClick={relayout}>Relayout</button>
       <QuiltedGallery
         ref={ref}
-        items={items}
-        cols={4}
-        rowHeight={160}
-        gap={4}
-        autoResize
-        onItemClick={({ index }) => console.log('click', index)}
-        onItemRemove={({ index }) => console.log('removed', index)}
-        style={{ width: '100%', border: '1px solid #eee' }}
+        images={images}
+        options={{
+          cols: (w) => (w < 600 ? 2 : 4),
+          gap: 4,
+          onItemClick: ({ index }) => console.log('click', index),
+        }}
       />
-
-      <div style={{ marginTop: 12, display: 'flex', gap: 8 }}>
-        <button onClick={() => ref.current?.addItem({ src: '/img/c.jpg', width: 1000, height: 1000, title: 'C' })}>
-          Append
-        </button>
-        <button onClick={() => ref.current?.removeItemAt(0)}>Remove #0</button>
-        <button onClick={() => ref.current?.relayout()}>Relayout</button>
-        <button onClick={() => ref.current?.refresh()}>Full refresh</button>
-        <button onClick={() => ref.current?.updateOptions({ cols: w => (w < 600 ? 2 : 4) })}>
-          Responsive cols
-        </button>
-      </div>
     </div>
   );
 }
