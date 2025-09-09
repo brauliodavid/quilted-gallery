@@ -13,9 +13,9 @@
       "browser": "./dist/index.js"
     },
     "./element": {
-      "types": "./dist/element/element.d.ts",
-      "import": "./dist/element/element.js",
-      "default": "./dist/element/element.js"
+      "types": "./dist/element/index.d.ts",
+      "import": "./dist/element/index.js",
+      "default": "./dist/element/index.js"
     },
     "./react": {
       "types": "./dist/react/index.d.ts",
@@ -25,13 +25,15 @@
   "unpkg": "dist/index.global.js",
   "jsdelivr": "dist/index.global.js",
   "scripts": {
-    "build": "pnpm run build:core && pnpm run build:element && pnpm run build:react --jsx react-jsx",
+    "build": "pnpm run build:core && pnpm run build:element && pnpm run build:react",
     "build:core": "tsup src/index.ts --format esm,cjs,iife --global-name QuiltedGallery --dts --sourcemap --minify && cp src/lib/style.css dist/style.css",
-    "build:element": "tsup src/element.ts --dts --format esm --target es2020 --sourcemap",
-    "build:react": "tsup src/react.tsx --dts --format esm --target es2020 --sourcemap --jsx react-jsx",
+    "build:element": "tsup src/element/index.ts --dts --format esm --target es2020 --sourcemap --out-dir dist/element",
+    "build:react": "tsup src/react/index.tsx --dts --format esm --target es2020 --sourcemap --out-dir dist/react",
     "dev": "tsup src/index.ts --format esm,cjs,iife --global-name QuiltedGallery --dts --sourcemap --watch",
-    "preview": "vite demo",
-    "start": "vite demo"
+    "preview": "vite demo/core",
+    "start": "vite demo/core",
+    "start:element": "vite demo/react",
+    "start:react": "vite demo/react"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

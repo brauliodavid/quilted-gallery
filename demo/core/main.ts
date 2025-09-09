@@ -1,5 +1,5 @@
-import {planQuiltSpans, QuiltedGallery} from '../src/index'
-import type {QuiltedImage} from '../src/index'
+import {planQuiltSpans, QuiltedGallery} from '../../src/index'
+import type {QuiltedImage} from '../../src/index'
 // import '../src/lib/style.css';
 
 const items: QuiltedImage[] = [

@@ -59,11 +59,7 @@ export const QuiltedGallery = forwardRef<QuiltedGalleryRef, QuiltedGalleryProps>
       autoResize,
       injectDefaultCSS,
       onItemClick,
-      onItemRemove,
-      className,
-      style,
-      children,
-      ...rest
+      onItemRemove
     },
     ref
   ) => {
@@ -155,14 +151,7 @@ export const QuiltedGallery = forwardRef<QuiltedGalleryRef, QuiltedGalleryProps>
     }), []);
 
     return (
-      <quilted-gallery
-        ref={elRef}
-        className={className}
-        style={style}
-        {...rest}
-      >
-        {children /* optional: <img> children as fallback */}
-      </quilted-gallery>
+      <div>Hola</div>
     );
   }
 );
@@ -170,23 +159,23 @@ export const QuiltedGallery = forwardRef<QuiltedGalleryRef, QuiltedGalleryProps>
 // Named + default export for convenience
 export default QuiltedGallery;
 
-// TSX: teach JSX about the tag so TS stops complaining
-// at the bottom of src/react.tsx or in src/types/jsx-quilted.d.ts
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      'quilted-gallery': React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      > & {
-        'items-json'?: string;
-        'cols'?: number | string;
-        'row-height'?: number | string;
-        'gap'?: number | string;
-        'auto-resize'?: '' | 'true' | 'false';
-        'inject-default-css'?: '' | 'true' | 'false';
-      };
-    }
-  }
-}
+// // TSX: teach JSX about the tag so TS stops complaining
+// // at the bottom of src/react.tsx or in src/types/jsx-quilted.d.ts
+// declare global {
+//   namespace JSX {
+//     interface IntrinsicElements {
+//       'quilted-gallery': React.DetailedHTMLProps<
+//         React.HTMLAttributes<HTMLElement>,
+//         HTMLElement
+//       > & {
+//         'items-json'?: string;
+//         'cols'?: number | string;
+//         'row-height'?: number | string;
+//         'gap'?: number | string;
+//         'auto-resize'?: '' | 'true' | 'false';
+//         'inject-default-css'?: '' | 'true' | 'false';
+//       };
+//     }
+//   }
+// }
 
