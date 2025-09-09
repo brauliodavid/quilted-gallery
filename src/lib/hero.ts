@@ -178,6 +178,7 @@ function packGapFree(
   }
 
   return placed.map(p => ({
+    ...p,
     src: planned.find(q => q._idx === p.idx)!.src,
     cols: p.cols,
     rows: p.rows
