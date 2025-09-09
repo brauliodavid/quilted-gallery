@@ -22,6 +22,12 @@
       "import": "./dist/react/index.js"
     }
   },
+  "typesVersions": {
+    "*": {
+      "element": ["dist/element/index.d.ts"],
+      "react":   ["dist/react/index.d.ts"]
+    }
+  },
   "unpkg": "dist/index.global.js",
   "jsdelivr": "dist/index.global.js",
   "scripts": {
