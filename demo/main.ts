@@ -97,7 +97,7 @@ btn.addEventListener('click', () => {
 });
 
 btn2.addEventListener('click', () => {
-  g.append({
+  g.addItem({
       src: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
       title: 'Bike',
       cols: 2,
@@ -110,7 +110,7 @@ btn3.addEventListener('click', () => {
 });
 
 btn4.addEventListener('click', () => {
-  g.removeAt(4)
+  g.removeItemAt(4)
 });
 
 (window as any).g = g; // for quick tinkering in console
