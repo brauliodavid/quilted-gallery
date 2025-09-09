@@ -63,7 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `minTotalHeroes`, `forceHeroOnFirstRow`
 - **Click API**: `onItemClick` callback and bubbling `itemClick` `CustomEvent` with `{ item, index, event }`.
 - **Build outputs**: ESM (`dist/index.mjs`), CJS (`dist/index.cjs`), IIFE global (`dist/index.global.js` as `window.QuiltedGallery`).
-- **Types**: `QuiltedItem`, `Options`, `PackOptions` type exports.
+- **Types**: `QuiltedImage`, `Options`, `PackOptions` type exports.
 - **Styles**: `dist/style.css` shipped; optional `injectDefaultCSS` fallback.
 - **CDN usage** (example):
   ```html
