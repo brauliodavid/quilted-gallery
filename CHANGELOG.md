@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] - 2025-09-09
+
 ## [0.0.8] - 2025-09-08
 
 ## [0.0.7] - 2025-09-08
@@ -63,7 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `minTotalHeroes`, `forceHeroOnFirstRow`
 - **Click API**: `onItemClick` callback and bubbling `itemClick` `CustomEvent` with `{ item, index, event }`.
 - **Build outputs**: ESM (`dist/index.mjs`), CJS (`dist/index.cjs`), IIFE global (`dist/index.global.js` as `window.QuiltedGallery`).
-- **Types**: `QuiltedItem`, `Options`, `PackOptions` type exports.
+- **Types**: `QuiltedImage`, `Options`, `PackOptions` type exports.
 - **Styles**: `dist/style.css` shipped; optional `injectDefaultCSS` fallback.
 - **CDN usage** (example):
   ```html
@@ -71,7 +73,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   <script src="https://cdn.jsdelivr.net/npm/quilted-gallery@0.0.0/dist/index.global.js" defer></script>
   ```
 
-[unreleased]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.8...HEAD
+[unreleased]: https://github.com/brauliodavid/quilted-gallery/compare/0.1.0...HEAD
+[0.1.0]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.8...0.1.0
 [0.0.8]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.7...0.0.8
 [0.0.7]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.6...0.0.7
 [0.0.6]: https://github.com/brauliodavid/quilted-gallery/compare/0.0.5...0.0.6
