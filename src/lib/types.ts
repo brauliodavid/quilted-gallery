@@ -7,10 +7,6 @@ export type QuiltedImage<T = unknown> = {
   data?: T;
 };
 
-export type QuiltedItemOptions<T = unknown> = {
-  
-}
-
 export type ItemClickPayload = {
   item: QuiltedImage;
   index: number;
