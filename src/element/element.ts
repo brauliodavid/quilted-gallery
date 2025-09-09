@@ -109,11 +109,32 @@ export class QuiltedGalleryElement extends HTMLElement {
 }
 
 // Tree-shakable registration
-export function register(tagName = QuiltedGalleryElement.tagName) {
-  if (!customElements.get(tagName)) customElements.define(tagName, QuiltedGalleryElement);
-}
+// element/element.ts (or element/index.ts)
 
-// TS: tag typing
-declare global {
-  interface HTMLElementTagNameMap { 'quilted-gallery': QuiltedGalleryElement; }
+declare global { interface Window { __QG_DEFINED__?: boolean } }
+
+export function register(tagName = QuiltedGalleryElement.tagName) {
+  if (typeof window === 'undefined' || !('customElements' in window)) return;
+
+  const name = String(tagName).trim().toLowerCase();
+  if (!/-/.test(name)) return; // CE names must contain a hyphen
+
+  if (window.__QG_DEFINED__) return;          // already registered in this runtime
+  if (customElements.get(name)) {             // registry already has it
+    window.__QG_DEFINED__ = true;
+    return;
+  }
+
+  try {
+    customElements.define(name, QuiltedGalleryElement);
+    window.__QG_DEFINED__ = true;
+  } catch (err: any) {
+    const msg = String(err?.message || '');
+    // Ignore second define or polyfill quirks
+    if (err?.name === 'NotSupportedError' || /already been defined/i.test(msg)) {
+      window.__QG_DEFINED__ = true;
+      return;
+    }
+    throw err;
+  }
 }
