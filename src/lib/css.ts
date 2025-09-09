@@ -19,7 +19,7 @@ export function injectCSS() {
     /* image swap (when src changes) */
     .qg-item > img.is-swapping { opacity:0; filter: blur(6px) saturate(.95); }
 
-    /* enter anim (on append) */
+    /* enter anim (on addItem) */
     .qg-item.qg-enter { transform: scale(.96); opacity:0; }
     .qg-item.qg-enter-active { transform:none; opacity:1; }
 

@@ -35,7 +35,7 @@ export class QuiltedGallery {
   }
 
   setItems(images: QuiltedImage[]) { this.images = images || []; this.render(); return this; }
-  updateOptions(patch: Partial<Options>) { Object.assign(this.opts, patch); this.render(); return this; }
+  patchOptions(patch: Partial<Options>) { Object.assign(this.opts, patch); this.render(); return this; }
 
   destroy() {
     this.ro?.disconnect();
@@ -58,7 +58,7 @@ export class QuiltedGallery {
       const e = ev as CustomEvent<{ index: number; animate?: boolean }>;
       const idx = e?.detail?.index;
       if (typeof idx === 'number') {
-        this.removeAt(idx, { animate: e.detail?.animate });
+        this.removeItemAt(idx, { animate: e.detail?.animate });
       }
     });
 
@@ -130,7 +130,7 @@ export class QuiltedGallery {
       item.el.classList.add('qg-enter');
 
       // Force a style/layout flush to commit the initial state.
-      // This guarantees the first append animates as well.
+      // This guarantees the first addItem animates as well.
       void item.el.offsetWidth;
 
       item.el.classList.add('qg-enter-active');
@@ -146,7 +146,7 @@ export class QuiltedGallery {
     return item;
   }
 
-  append(image: QuiltedImage, opts: { index?: number, animate?: boolean } = {}) {
+  addItem(image: QuiltedImage, opts: { index?: number, animate?: boolean } = {}) {
     const index = Math.max(0, Math.min(opts.index ?? this.images.length, this.images.length));
 
     // model
@@ -170,7 +170,7 @@ export class QuiltedGallery {
   }
 
   /** Remove one image/tile by index. Optionally animates the reflow of remaining items. */
-  removeAt(index: number, opts: { animate?: boolean } = {}) {
+  removeItemAt(index: number, opts: { animate?: boolean } = {}) {
     const { animate = true } = opts;
 
     const model = this.images[index];
