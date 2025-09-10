@@ -35,7 +35,7 @@ export interface QuiltedInput {
   title?: string;
 }
 
-export interface QuiltedOutput {
+export interface QuiltedOutput extends QuiltedImage {
   src: string;
   cols: number;
   rows: number;
