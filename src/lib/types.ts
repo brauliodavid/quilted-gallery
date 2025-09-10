@@ -33,12 +33,11 @@ export interface QuiltedInput {
   width: number;
   height: number;
   title?: string;
-  [k: string]: any
 }
 
 export interface QuiltedOutput {
   src: string;
   cols: number;
   rows: number;
-  [k: string]: any
+  originalIndex: number
 }
