@@ -110,12 +110,12 @@ function interleaveNoConsecutive<T extends { _hero: boolean }>(
  *  (and re-enforces orientation) until it does. Always places something (1×1 fallback).
  */
 function packGapFree(
-  planned: (QuiltedOutput & { _idx: number; _hero: boolean; _orient: 'portrait'|'landscape'|'square' })[],
+  planned: (Partial<QuiltedOutput> & { _idx: number; _hero: boolean; _orient: 'portrait'|'landscape'|'square' })[],
   numCols: number,
   maxRows: number
 ): QuiltedOutput[] {
   const heights = Array<number>(numCols).fill(0); // skyline per column
-  const placed: { idx: number; cols: number; rows: number }[] = [];
+  const placed: { originalIndex: number; cols: number; rows: number }[] = [];
 
   function findPosition(wCols: number): { x: number; y: number } | null {
     let bestX = -1, bestY = Number.MAX_SAFE_INTEGER;
@@ -153,7 +153,7 @@ function packGapFree(
         const pos2 = findPosition(cols);
         if (pos2) {
           placeAt(pos2.x, pos2.y, cols, rows);
-          placed.push({ idx: n._idx, cols, rows });
+          placed.push({ originalIndex: n._idx, cols, rows });
           done = true;
           break;
         }
@@ -173,13 +173,13 @@ function packGapFree(
     if (!done) {
       const pos = findPosition(1)!;
       placeAt(pos.x, pos.y, 1, 1);
-      placed.push({ idx: n._idx, cols: 1, rows: 1 });
+      placed.push({ originalIndex: n._idx, cols: 1, rows: 1 });
     }
   }
 
   return placed.map(p => ({
     ...p,
-    src: planned.find(q => q._idx === p.idx)!.src,
+    src: planned.find(q => q._idx === p.originalIndex)!.src,
     cols: p.cols,
     rows: p.rows
   }));
