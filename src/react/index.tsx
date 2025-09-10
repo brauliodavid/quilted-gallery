@@ -32,7 +32,7 @@ export const QuiltedGallery = forwardRef<QuiltedGalleryRef, QuiltedGalleryProps>
 
     // keep items in sync
     useEffect(() => {
-      galleryRef.current?.setItems(images ?? []);
+      galleryRef.current?.setImages(images ?? []);
     }, [images]);
 
     // keep options in sync (only when provided)

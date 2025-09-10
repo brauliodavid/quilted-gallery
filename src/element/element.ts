@@ -48,7 +48,7 @@ export class QuiltedGalleryElement extends HTMLElement {
   }
   set items(v: QuiltedImage[]) {
     this.#items = Array.isArray(v) ? v : [];
-    this.#gallery ? this.#gallery.setItems(this.#items) : void 0;
+    this.#gallery ? this.#gallery.setImages(this.#items) : void 0;
   }
 
   get options(): ElementOptions {
@@ -60,7 +60,7 @@ export class QuiltedGalleryElement extends HTMLElement {
   }
 
   // ---------- Convenience API (no DOM name collisions) ----------
-  setItems(items: QuiltedImage[]) { this.items = items; }
+  setImages(items: QuiltedImage[]) { this.items = items; }
   addItem(item: QuiltedImage) { this.#items = [...this.#items, item]; this.#gallery?.addItem(item); }
   updateItemAt(index: number, patch: Partial<QuiltedImage>) { this.#gallery?.updateItemAt(index, patch); }
   removeItemAt(index: number) {
