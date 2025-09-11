@@ -13,7 +13,7 @@ const g = new QuiltedGallery(el, images, {
   cols: 3,
   rowHeight: 140,
   gap: 4,
-  onItemClick: ({ item, index, event }) => {
+  onImageClick: ({ item, index, event }) => {
     console.log('clicked via callback', item, index, event);
   }
 });

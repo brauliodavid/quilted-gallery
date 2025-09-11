@@ -13,8 +13,8 @@
       }
 
       el.patchOptions({
-        onItemClick: ({ item, index, event }) => {
-          console.log('onItemClick callback', index, item, event.type);
+        onImageClick: ({ item, index, event }) => {
+          console.log('onImageClick callback', index, item, event.type);
         },
         onItemRemove: ({ index, image }) => {
           console.log('onItemRemove callback', index, image);
