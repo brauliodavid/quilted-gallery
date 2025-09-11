@@ -31,7 +31,7 @@ export default function App() {
         options={{
           cols: (w) => (w < 600 ? 2 : 4),
           gap: 4,
-          onItemClick: ({ index }) => console.log('click', index),
+          onImageClick: ({ index }) => console.log('click', index),
         }}
       />
     </div>
