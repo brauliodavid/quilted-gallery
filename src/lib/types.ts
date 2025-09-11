@@ -25,7 +25,7 @@ export type BaseOptions = {
   src: (it: QuiltedImage, cellH: number, rows: number, cols: number) => string;
   srcset: (it: QuiltedImage, cellH: number, rows: number, cols: number) => string;
   classNames: { root: string; item: string };
-  onItemClick?: (payload: ItemClickPayload) => void;
+  onImageClick?: (payload: ItemClickPayload) => void;
 };
 
 export interface QuiltedInput {

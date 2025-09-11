@@ -301,7 +301,7 @@ export class QuiltedGalleryItem {
     // Single place to wire click behavior
     this.el.addEventListener('click', (ev) => {
       const payload = { item: this.item, index: this.index, event: ev };
-      this.opts.onItemClick?.(payload);
+      this.opts.onImageClick?.(payload);
       this.el.dispatchEvent(new CustomEvent('itemClick', {
         detail: payload, bubbles: true, cancelable: true, composed: true
       }));
